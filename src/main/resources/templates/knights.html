@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Knight list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<table>
+    <thead>
+    <tr><td>Imie rycerza</td><td>Wiek</td></tr>
+    </thead>
+    <tbody th:each="knight : ${knights}">
+        <tr>
+            <td th:text="${knight.name}"></td>
+            <td th:text="${knight.age}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
