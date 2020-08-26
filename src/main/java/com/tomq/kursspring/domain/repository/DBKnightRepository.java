@@ -3,8 +3,8 @@ package com.tomq.kursspring.domain.repository;
 import com.tomq.kursspring.domain.Knight;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Optional;
 
 public class DBKnightRepository implements KnightRepository {
 
@@ -22,21 +22,25 @@ public class DBKnightRepository implements KnightRepository {
     }
 
     @Override
-    public Knight getKnight(String name) {
+    public Knight getKnightById(int id) {
         System.out.println("uzywam bazy danych");
         throw new NotImplementedException();
     }
 
     @Override
-    public void deleteKnight(String name) {
-        System.out.println("uzywam bazy danych");
-        throw new NotImplementedException();
+    public Optional<Knight> getKnight(String name) {
+        return Optional.empty();
     }
 
     @Override
-    @PostConstruct
-    public void build() {
+    public void deleteKnight(int id) {
+        System.out.println("Usuwam rycerza o id:");
+    }
 
+    @Override
+    public void createKnight(Knight knight) {
+        System.out.println("towrzenie rycerza w bazie danych");
+        throw new NotImplementedException();
     }
 
 

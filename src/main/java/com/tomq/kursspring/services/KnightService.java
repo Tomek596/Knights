@@ -20,5 +20,15 @@ public class KnightService {
         return new ArrayList<>(knightRepository.getAllKnights());
     }
 
+    public void saveKnight(Knight knight) {
+        knightRepository.createKnight(knight);
+    }
 
+    public Knight getKnight(int id) {
+        return knightRepository.getKnightById(id);
+    }
+
+    public void deleteKnight(int id) {
+        knightRepository.deleteKnight(id);
+    }
 }

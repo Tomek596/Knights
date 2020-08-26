@@ -3,6 +3,7 @@ package com.tomq.kursspring.domain.repository;
 import com.tomq.kursspring.domain.Knight;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface KnightRepository {
 
@@ -10,9 +11,11 @@ public interface KnightRepository {
 
     Collection<Knight> getAllKnights();
 
-    Knight getKnight(String name);
+    Knight getKnightById(int id);
 
-    void deleteKnight(String name);
+    Optional<Knight> getKnight(String name);
 
-    void build();
+    void deleteKnight(int id);
+
+    void createKnight(Knight knight);
 }

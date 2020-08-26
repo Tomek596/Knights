@@ -4,22 +4,30 @@ import java.util.Objects;
 
 public class Knight {
 
+    private int knightId;
+
     private String name;
 
     private int age;
-
+    private int level;
     private Quest quest;
 
-
     public Knight() {
-        this.name = "Lancelot";
-        this.age = 29;
+        this.level = 1;
     }
 
     public Knight(String name, int age) {
         this.name = name;
         this.age = age;
+        this.level = 1;
+    }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override
@@ -40,12 +48,20 @@ public class Knight {
         this.quest = quest;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public int getKnightId() {
+        return knightId;
+    }
+
+    public void setKnightId(int knightId) {
+        this.knightId = knightId;
     }
 
     public int getAge() {
         return this.age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getName() {

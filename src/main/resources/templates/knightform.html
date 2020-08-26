@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Knight list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal" th:object="${knight}" th:action="@{/knights}" th:method="post">
+        <div class="form-group">
+            <label class="control-label" for="name">Imie:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="age">Wiek:</label>
+            <input type="text" class="form-control" id="age" th:field="*{age}"/>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-default">Utwórz rycerza</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

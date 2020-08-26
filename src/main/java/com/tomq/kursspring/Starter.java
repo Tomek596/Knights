@@ -12,14 +12,19 @@ import org.springframework.stereotype.Component;
 @Scope("singleton")
 public class Starter implements CommandLineRunner {
 
-    @Autowired
+
     KnightRepository knightRepository;
 
-    @Autowired
     QuestRepository questRepository;
 
-    @Autowired
     QuestService questService;
+
+    @Autowired
+    public Starter(KnightRepository knightRepository, QuestRepository questRepository, QuestService questService) {
+        this.knightRepository = knightRepository;
+        this.questRepository = questRepository;
+        this.questService = questService;
+    }
 
     @Override
     public void run(String... strings) throws Exception {

@@ -3,18 +3,33 @@
 <head>
     <title>Knight list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
-<table>
-    <thead>
-    <tr><td>Imie rycerza</td><td>Wiek</td></tr>
-    </thead>
-    <tbody th:each="knight : ${knights}">
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Imie rycerza</td>
+            <td>Wiek</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody th:each="knight : ${knights}">
         <tr>
             <td th:text="${knight.name}"></td>
-            <td th:text="${knight.age}"></td>
+            <td th:text="${knight.level}"></td>
+            <td><a th:href="${'/knight?id='+knight.knightId}">Podgląd</a></td>
+            <td><a th:href="${'/knight/delete/'+knight.knightId}">Usuń</a></td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <div class="row">
+        <button class="btn btn-info"><a href="/newknight">Zrekrótuj nowego rycerza</a></button>
+    </div>
+</div>
 </body>
 </html>
