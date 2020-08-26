@@ -7,18 +7,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestService {
 
+    private KnightRepository knightRepository;
+
+    private QuestRepository questRepository;
+
+    public QuestService() {
+    }
+
     @Autowired
-    KnightRepository knightRepository;
+    public QuestService(KnightRepository knightRepository) {
+        this.knightRepository = knightRepository;
+    }
 
-
-    @Autowired
-    QuestRepository questRepository;
-
-    final static Random rand= new Random();
+    final static Random rand = new Random();
 
     public void assignRandomQuest(String knightName) {
         List<Quest> allQuests = questRepository.getAll();
@@ -27,4 +33,12 @@ public class QuestService {
         questRepository.deleteQuest(randomQuest);
     }
 
+    public List<Quest> getAllNotStartedQuests() {
+        return questRepository.getAll().stream().filter(quest -> !quest.isStarted()).collect(Collectors.toList());
+    }
+
+    @Autowired
+    public void setQuestRepository(QuestRepository questRepository) {
+        this.questRepository = questRepository;
+    }
 }

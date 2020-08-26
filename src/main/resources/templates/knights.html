@@ -17,6 +17,7 @@
         <tr>
             <td>Imie rycerza</td>
             <td>Wiek</td>
+            <td>Zadanie</td>
             <td></td>
         </tr>
         </thead>
@@ -24,6 +25,11 @@
         <tr>
             <td th:text="${knight.name}"></td>
             <td th:text="${knight.level}"></td>
+            <td>
+                <span th:if="${knight.quest==null}">Aktualnie brak zadania.<a
+                        th:href="${'/assignQuest?knightId='+knight.knightId}">Przypisz zadanie</a> </span>
+                <span th:if="${knight.quest!=null}" th:text="${knight.quest.toString()}"></span>
+            </td>
             <td><a th:href="${'/knight?id='+knight.knightId}">Podgląd</a></td>
             <td><a th:href="${'/knight/delete/'+knight.knightId}">Usuń</a></td>
         </tr>

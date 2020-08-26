@@ -1,6 +1,7 @@
 package com.tomq.kursspring.domain.repository;
 
 import com.tomq.kursspring.domain.Knight;
+import com.tomq.kursspring.utils.Ids;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -20,7 +21,7 @@ public class InMemoryRepository implements KnightRepository {
     public void createKnight(String name, int age) {
 
         Knight newKnight = new Knight(name, age);
-        newKnight.setKnightId(getNewId());
+        newKnight.setKnightId(Ids.getNewId(knights.keySet()));
         knights.put(newKnight.getKnightId(), newKnight);
     }
 
@@ -37,9 +38,7 @@ public class InMemoryRepository implements KnightRepository {
     @Override
     public Optional<Knight> getKnight(String name) {
 
-        Optional<Knight> knightByName = knights.values().stream().filter(knight -> knight.getName().equals(name)).findAny();
-
-        return knightByName;
+        return knights.values().stream().filter(knight -> knight.getName().equals(name)).findAny();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class InMemoryRepository implements KnightRepository {
 
     @Override
     public void createKnight(Knight knight) {
-        knight.setKnightId(getNewId());
+        knight.setKnightId(Ids.getNewId(knights.keySet()));
         knights.put(knight.getKnightId(), knight);
     }
 
@@ -64,14 +63,5 @@ public class InMemoryRepository implements KnightRepository {
         return "InMemoryRepository{" +
                 "knights=" + knights +
                 '}';
-    }
-
-    public int getNewId() {
-        if (knights.isEmpty()) {
-            return 0;
-        } else {
-            Integer integer = knights.keySet().stream().max((o1, o2) -> o1.compareTo(o2)).get();
-            return integer + 1;
-        }
     }
 }
