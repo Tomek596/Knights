@@ -1,15 +1,25 @@
 package com.tomq.kursspring.domain;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Knight {
 
     private int knightId;
 
+    @NotNull
+    @Size(min = 2, max = 40, message = "Imie rycerza musi być między 2, a 40 znaków.")
     private String name;
 
+    @NotNull
+    @Range(min = 18, max = 60, message = "Ryczerz musi mieć conajmniej 18 lat, a nie więcej niż 60")
     private int age;
+
     private int level;
+
     private Quest quest;
 
     public Knight() {

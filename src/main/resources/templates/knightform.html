@@ -9,15 +9,18 @@
 
 </head>
 <body>
+
 <div class="container">
     <form class="form-horizontal" th:object="${knight}" th:action="@{/knights}" th:method="post">
         <div class="form-group">
             <label class="control-label" for="name">Imie:</label>
             <input type="text" class="form-control" id="name" th:field="*{name}"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
         <div class="form-group">
             <label class="control-label" for="age">Wiek:</label>
             <input type="text" class="form-control" id="age" th:field="*{age}"/>
+            <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
         </div>
         <div class="row">
             <button type="submit" class="btn btn-default">Utwórz rycerza</button>
