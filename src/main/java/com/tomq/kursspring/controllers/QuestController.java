@@ -15,9 +15,9 @@ import java.util.List;
 @Controller
 public class QuestController {
 
-    private KnightService knightService;
+    private final KnightService knightService;
 
-    private QuestService questService;
+    private final QuestService questService;
 
     @Autowired
     public QuestController(KnightService knightService, QuestService questService) {
@@ -29,6 +29,8 @@ public class QuestController {
     public String assingQuest(@RequestParam("knightId") Integer id, Model model) {
         Knight knight = knightService.getKnight(id);
         List<Quest> notStartedQuests = questService.getAllNotStartedQuests();
+        model.addAttribute("knight", knight);
+        model.addAttribute("notStartedQuests", notStartedQuests);
         return "assingQuest";
     }
 }
