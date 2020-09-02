@@ -53,13 +53,14 @@ public class Knight {
         return Objects.hash(age);
     }
 
-    public void setQuest(Quest quest) {
-        quest.setStarted(true);
-        this.quest = quest;
-    }
-
     public Quest getQuest() {
         return quest;
+    }
+
+    public void setQuest(Quest quest) {
+        if (quest != null)
+            quest.setStarted(true);
+        this.quest = quest;
     }
 
     public int getKnightId() {

@@ -9,12 +9,13 @@
 
 </head>
 <body>
-<p>Aktualny czas <span th:text="${timeComponent.time}"/></p>
-<p>Posiadane złoto <span th:text="${playerInformation.gold}"/></p>
+<p>Aktualny czas <span th:text="${timeComponent.time}"></span></p>
+<p>Posiadane złoto <span th:text="${playerInformation.gold}"></span></p>
 <div class="container">
     <p th:text="${knight.name}"></p>
     <p th:text="${knight.age}"></p>
     <p th:text="${knight.level}"></p>
+    <p th:text="${knight.quest}"></p>
 </div>
 </body>
 </html>

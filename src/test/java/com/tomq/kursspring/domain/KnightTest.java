@@ -9,7 +9,7 @@ public class KnightTest {
     @Test
     public void testIfQuestMarkedAsStarted() {
         Knight knight = new Knight("Percival", 25);
-        Quest quest = new Quest("Zadanie testowe");
+        Quest quest = new Quest(1, "Zadanie testowe");
 
         knight.setQuest(quest);
 

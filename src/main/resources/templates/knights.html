@@ -9,14 +9,17 @@
 
 </head>
 <body>
-<p>Aktualny czas <span th:text="${timeComponent.time}"/></p>
-<p>Posiadane złoto <span th:text="${playerInformation.gold}"/></p>
+
 <div class="container">
+    Posiadane złoto <span th:text="${playerInformation.gold}"></span>
+
+    <a th:href="${'/checkQuests'}">Aktualizuj zadania</a>
+
     <table class="table">
         <thead>
         <tr>
             <td>Imie rycerza</td>
-            <td>Wiek</td>
+            <td>Poziom</td>
             <td>Zadanie</td>
             <td></td>
         </tr>
@@ -36,7 +39,7 @@
         </tbody>
     </table>
     <div class="row">
-        <button class="btn btn-info"><a href="/newknight">Zrekrótuj nowego rycerza</a></button>
+        <button class="btn btn-info"><a href="/newknight">Zrekrutuj nowego rycerza</a></button>
     </div>
 </div>
 </body>
