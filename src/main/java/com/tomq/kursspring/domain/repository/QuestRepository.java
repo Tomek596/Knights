@@ -1,12 +1,15 @@
 package com.tomq.kursspring.domain.repository;
 
 import com.tomq.kursspring.domain.Quest;
-import com.tomq.kursspring.utils.Ids;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Repository
 public class QuestRepository {
@@ -14,35 +17,26 @@ public class QuestRepository {
 
     Random rand = new Random();
 
-    Map<Integer, Quest> quests = new HashMap<>();
+    @PersistenceContext
+    private EntityManager entityManager;
 
+    @Transactional
     public void createQuest(String description) {
-        Integer newId = Ids.getNewId(quests.keySet());
-        Quest newQuest = new Quest(newId, description);
-        quests.put(newId, newQuest);
+        Quest newQuest = new Quest(description);
+        entityManager.persist(newQuest);
     }
 
     public List<Quest> getAll() {
-        return new ArrayList<>(quests.values());
+        return entityManager.createQuery("FROM Quest", Quest.class).getResultList();
     }
 
+    @Transactional
     public void deleteQuest(Quest quest) {
-        quests.remove(quest.getId());
-    }
-
-    @PostConstruct
-    public void init() {
-
-    }
-
-    @Override
-    public String toString() {
-        return "QuestRepository{" +
-                "questList=" + quests +
-                '}';
+        entityManager.remove(quest);
     }
 
     @Scheduled(fixedDelayString = "${questCreationDelay}")
+    @Transactional
     public void createRandomQuest() {
         List<String> descriptions = new ArrayList<>();
 
@@ -55,11 +49,12 @@ public class QuestRepository {
         createQuest(description);
     }
 
+    @Transactional
     public void update(Quest quest) {
-        quests.put(quest.getId(), quest);
+        entityManager.merge(quest);
     }
 
     public Quest getQuest(Integer id) {
-        return quests.get(id);
+        return entityManager.find(Quest.class, id);
     }
 }

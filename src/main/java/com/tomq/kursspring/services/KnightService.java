@@ -3,8 +3,11 @@ package com.tomq.kursspring.services;
 import com.tomq.kursspring.domain.Knight;
 import com.tomq.kursspring.domain.PlayerInformation;
 import com.tomq.kursspring.domain.repository.KnightRepository;
+import com.tomq.kursspring.domain.repository.PlayerInformationRepository;
+import com.tomq.kursspring.domain.repository.QuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +18,15 @@ public class KnightService {
 
     final KnightRepository knightRepository;
 
-    final PlayerInformation playerInformation;
+    final PlayerInformationRepository playerInformationRepository;
+
+    final QuestRepository questRepository;
 
     @Autowired
-    public KnightService(KnightRepository knightRepository, PlayerInformation playerInformation) {
+    public KnightService(KnightRepository knightRepository, PlayerInformationRepository playerInformationRepository, QuestRepository questRepository) {
         this.knightRepository = knightRepository;
-        this.playerInformation = playerInformation;
+        this.playerInformationRepository = playerInformationRepository;
+        this.questRepository = questRepository;
     }
 
     public List<Knight> getAllKnights() {
@@ -55,19 +61,27 @@ public class KnightService {
                 .mapToInt(knight -> knight.getQuest().getReward())
                 .sum();
         knightRepository.getAllKnights().stream().filter(knightPredicate)
-                .forEach(knight -> knight.setQuest(null));
+                .forEach(knight -> {
+                    knight.setQuest(null);
+                });
         return sum;
     }
 
+    @Transactional
     public void getMyGold() {
         List<Knight> allKnights = getAllKnights();
         allKnights.forEach(knight -> {
             if (knight.getQuest() != null) {
-                knight.getQuest().isCompleted();
+                boolean completed = knight.getQuest().isCompleted();
+                if (completed) {
+                    questRepository.update(knight.getQuest());
+                }
             }
         });
 
-        int currentGold = playerInformation.getGold();
-        playerInformation.setGold(currentGold + collectReward());
+        PlayerInformation first = playerInformationRepository.getFirst();
+        int currentGold = first.getGold();
+        first.setGold(currentGold + collectReward());
+
     }
 }

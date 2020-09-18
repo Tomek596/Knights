@@ -3,7 +3,9 @@ package com.tomq.kursspring.config;
 import com.tomq.kursspring.domain.repository.DBKnightRepository;
 import com.tomq.kursspring.domain.repository.InMemoryRepository;
 import com.tomq.kursspring.domain.repository.KnightRepository;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class MainConfig {

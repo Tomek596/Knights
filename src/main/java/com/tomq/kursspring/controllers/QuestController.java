@@ -1,7 +1,6 @@
 package com.tomq.kursspring.controllers;
 
 import com.tomq.kursspring.domain.Knight;
-import com.tomq.kursspring.domain.PlayerInformation;
 import com.tomq.kursspring.domain.Quest;
 import com.tomq.kursspring.services.KnightService;
 import com.tomq.kursspring.services.QuestService;
@@ -21,13 +20,10 @@ public class QuestController {
 
     private QuestService questService;
 
-    private PlayerInformation playerInformation;
-
     @Autowired
-    public QuestController(KnightService knightService, QuestService questService, PlayerInformation playerInformation) {
+    public QuestController(KnightService knightService, QuestService questService) {
         this.knightService = knightService;
         this.questService = questService;
-        this.playerInformation = playerInformation;
     }
 
     @RequestMapping("/assignQuest")

@@ -3,6 +3,7 @@ package com.tomq.kursspring.controllers;
 import com.tomq.kursspring.components.TimeComponent;
 import com.tomq.kursspring.domain.Knight;
 import com.tomq.kursspring.domain.PlayerInformation;
+import com.tomq.kursspring.domain.repository.PlayerInformationRepository;
 import com.tomq.kursspring.services.KnightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,18 +22,19 @@ public class KnightController {
 
     private final KnightService service;
     private final TimeComponent timeComponent;
-    private final PlayerInformation playerInformation;
+    private final PlayerInformationRepository playerInformationRepository;
 
     @Autowired
-    public KnightController(KnightService service, TimeComponent timeComponent, PlayerInformation playerInformation) {
+    public KnightController(KnightService service, TimeComponent timeComponent, PlayerInformationRepository playerInformationRepository) {
         this.service = service;
         this.timeComponent = timeComponent;
-        this.playerInformation = playerInformation;
+        this.playerInformationRepository = playerInformationRepository;
     }
 
     @RequestMapping("/knights")
     public String getKnights(Model model) {
         List<Knight> allKnights = service.getAllKnights();
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("knights", allKnights);
         model.addAttribute("timeComponent", timeComponent);
         model.addAttribute("playerInformation", playerInformation);
@@ -42,12 +44,8 @@ public class KnightController {
     @RequestMapping(value = "/knights", method = RequestMethod.POST)
     public String saveKnight(@Valid Knight knight, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(error -> {
-                System.out.println(error.getObjectName() + " " + error.getDefaultMessage());
-            });
+            bindingResult.getAllErrors().forEach(error -> System.out.println(error.getObjectName() + " " + error.getDefaultMessage()));
             return "knightform";
-        } else {
-
         }
         service.saveKnight(knight);
         return "redirect:/knights";
@@ -55,6 +53,7 @@ public class KnightController {
 
     @RequestMapping("/newknight")
     public String createKnight(Model model) {
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("knight", new Knight());
         model.addAttribute("timeComponent", timeComponent);
         model.addAttribute("playerInformation", playerInformation);
@@ -64,6 +63,7 @@ public class KnightController {
     @RequestMapping("/knight")
     public String getKnight(@RequestParam("id") Integer id, Model model) {
         Knight knight = service.getKnight(id);
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("knight", knight);
         model.addAttribute("timeComponent", timeComponent);
         model.addAttribute("playerInformation", playerInformation);

@@ -1,16 +1,30 @@
 package com.tomq.kursspring.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class Quest {
 
     protected LocalDateTime startDate;
     protected int lengthInSeconds = 10;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String description;
     private int reward = 100;
     private boolean started = false;
     private boolean completed = false;
+
+    public Quest() {
+    }
+
+    public Quest(String description) {
+        this.description = description;
+    }
 
     public Quest(int id, String description) {
         this.id = id;
